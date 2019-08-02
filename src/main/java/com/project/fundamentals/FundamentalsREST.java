@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 
 
+
+
 @RestController
 public class FundamentalsREST {
 
@@ -134,7 +136,7 @@ public class FundamentalsREST {
 	
 
 	@RequestMapping(value = "/viewgroupversion", method = RequestMethod.GET)
-	public List<viewvouchercardgroup> getversiongroup(@RequestParam("serialType")String serialType,
+	public List<viewvouchercardgroup> getversiongroup(@RequestParam("serviceType")String serialType,
 			@RequestParam("subService")String subService,@RequestParam("cardGroupSetName")String cardGroupSetName,
 			@RequestParam("moduleCode")String moduleCode,@RequestParam("networkCode")String networkCode)
 	{
@@ -142,6 +144,21 @@ public class FundamentalsREST {
 		return fundamentalsService.viewVersionGroup(serialType,subService,cardGroupSetName,moduleCode,networkCode);
 
 	}
+	
+	@RequestMapping(value = "/viewrequired", method = RequestMethod.GET)
+	@ResponseBody
+    public Optional<CardGroupDetails> viewrequiredParameters(@RequestParam("serviceType")String serviceType,
+			@RequestParam("subService")String subService,@RequestParam("cardGroupSetName")String cardGroupSetName,
+			@RequestParam("moduleCode")String moduleCode,@RequestParam("networkCode")String networkCode,@RequestParam("lastVersion")String lastVersion) {
+		
+		return fundamentalsService.viewrequired(serviceType,subService,cardGroupSetName,moduleCode,networkCode,lastVersion);
+     
+        // HttpHeaders ht=new HttpHeaders();
+        // ht.add("status", "200");
+        // ht.add("msg", "Default Voucher Card Group status set successfully");
+        // return new ResponseEntity<String>("status:200 Default Voucher Card Group status set successfully",ht,HttpStatus.OK);
+    }
+	
 	
 	
 }

@@ -1,6 +1,8 @@
 package com.project.fundamentals;
 
 import java.util.List;
+import java.util.Optional;
+
 
 public interface FundamentalsService {
 
@@ -18,4 +20,5 @@ public interface FundamentalsService {
 	
 	public void updateByCardName(String name, Fundamentalssetvouchercard fundamentalssetvouchercard);
 
+	Optional<CardGroupDetails> viewrequired(String serialType, String subService,String cardGroupSetName,String moduleCode,String networkCode,String lastVersion);
 }

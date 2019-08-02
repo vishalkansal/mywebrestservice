@@ -8,12 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+
+
+
+
 @Service
 public class FundamentalsServiceimp implements FundamentalsService{
 
 	@Autowired
 	private FundamentalsRepo fundamentalsRepo;
 	
+	@Autowired
+	RepoCardGroupDetails repocardgroupdetails;
 	
 	
 	public FundamentalsServiceimp(FundamentalsRepo fundamentalsRepo)
@@ -134,6 +140,16 @@ public List<viewvouchercardgroup> viewVersionGroup(String serialType,
 	return viewneed;
 	
 }
-		
+public Optional<CardGroupDetails> viewrequired(String serviceType, String subService,String cardGroupSetName,String moduleCode,String networkCode,String lastVersion){
+	
+	List<Fundamentalssetvouchercard> view=fundamentalsRepo.findByServiceTypeAndSubServiceAndCardGroupSetNameAndModuleCodeAndNetworkCodeAndLastVersion(serviceType,subService,cardGroupSetName,moduleCode,networkCode,lastVersion);
+	
+	int id=view.get(0).getCardGroupSetId();
+	
+System.out.println(id);
+	return	repocardgroupdetails.findById(id);	
+}
+
+
 	
 }
