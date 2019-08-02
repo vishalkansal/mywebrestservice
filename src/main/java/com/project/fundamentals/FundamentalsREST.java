@@ -87,6 +87,31 @@ public class FundamentalsREST {
 	
 	*/
 	
+	@RequestMapping(value = "/deleteVoucherGroup", method = RequestMethod.DELETE)
+	@ResponseBody
+    public ResponseEntity<String> deletebyid(@RequestBody Fundamentalssetvouchercard fundamentalsupdatevouchercard)
+    {
+		
+		fundamentalsService.deleteVoucher(fundamentalsupdatevouchercard);
+		
+		 return new ResponseEntity<String>("status:200 Voucher Card Group deleted successfully",HttpStatus.OK);
+   }
+	
+	
+	
+	@RequestMapping(value = "/updatevouchercardbyname/{cardGroupSetName}", method = RequestMethod.PUT)
+	@ResponseBody
+    public ResponseEntity<String> updateNewFundamentalssetvouchercardbyname(@PathVariable(value="cardGroupSetName") String  cardGroupSetName, @RequestBody Fundamentalssetvouchercard fundamentalsupdatevouchercard) {
+		
+		fundamentalsService.updateByCardName(cardGroupSetName,fundamentalsupdatevouchercard);
+     
+         HttpHeaders ht=new HttpHeaders();
+         ht.add("status", "200");
+         ht.add("msg", "Voucher Card Group updated by name successfully");
+         return new ResponseEntity<String>("status:200 Voucher Card Group updated by name successfully",ht,HttpStatus.OK);
+    }	
+	
+	
 	
 	
 	

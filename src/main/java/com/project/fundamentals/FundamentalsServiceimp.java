@@ -46,12 +46,11 @@ public class FundamentalsServiceimp implements FundamentalsService{
 	@Override
 	public void updateFundamentalssetvouchercardbyid(int card_group_set_id,Fundamentalssetvouchercard fundamentalsupdatevouchercard) {
 		
-//	Fundamentalssetvouchercard update=	 fundamentalsRepo.findById(card_group_set_id);
 		   Optional<Fundamentalssetvouchercard> update=fundamentalsRepo.findById( card_group_set_id);
     
 	if(update!=null)
 		     {
-		    	 fundamentalsupdatevouchercard.setCARD_GROUP_SET_ID(card_group_set_id);
+		    	 fundamentalsupdatevouchercard.setCardGroupSetId(card_group_set_id);
 		    	 fundamentalsRepo.save(fundamentalsupdatevouchercard);
 		     }    
 	}
@@ -70,6 +69,44 @@ public class FundamentalsServiceimp implements FundamentalsService{
 		fundamentalsRepo.deleteById(id);
 		
 	}
+
+@Override
+	public void updateByCardName(String name, Fundamentalssetvouchercard fundamentalssetvouchercard) {
+		
+	Fundamentalssetvouchercard fundamentalssetvouchercard2 = fundamentalsRepo.findByCardGroupSetName(name);
+	int i=0;
+	 i=fundamentalssetvouchercard2.getCardGroupSetId();
+		if(i!=0)
+		{
+			fundamentalssetvouchercard.setCardGroupSetId(i);
+			fundamentalsRepo.save(fundamentalssetvouchercard);
+		}
+		
+	}
+
+
+@Override
+public void deleteVoucher(Fundamentalssetvouchercard fundamentalssetvouchercard) {
+	
+List<Fundamentalssetvouchercard> del=fundamentalsRepo.findByServiceTypeAndSubServiceAndCardGroupSetNameAndModuleCodeAndNetworkCodeAndLastVersion
+(fundamentalssetvouchercard.getServiceType(),
+		fundamentalssetvouchercard.getSubService(),
+		fundamentalssetvouchercard.getCardGroupSetName(),
+		fundamentalssetvouchercard.getModuleCode(),
+		fundamentalssetvouchercard.getNetworkCode(),
+		fundamentalssetvouchercard.getLastVersion());
+	
+int siz=del.size();
+System.out.println(siz);
+int a=0;
+for(int i=0;i<siz;i++)
+{
+	Fundamentalssetvouchercard deletevoucher=del.get(i);
+a=deletevoucher.getCardGroupSetId();
+fundamentalsRepo.deleteById(a);
+}
+
+}
 		
 	
 }

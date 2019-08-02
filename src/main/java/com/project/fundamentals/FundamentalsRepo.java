@@ -11,7 +11,10 @@ import org.springframework.stereotype.Repository;
 interface FundamentalsRepo extends JpaRepository<Fundamentalssetvouchercard,Integer > {
 
 //	Fundamentalssetvouchercard findByCARD_GROUP_SET_ID(int id);
-//	Fundamentalssetvouchercard findByCard_group_set_name(String card_group_set_name);
+	
+	Fundamentalssetvouchercard findByCardGroupSetName(String cardGroupSetName);
 
+	List<Fundamentalssetvouchercard> findByServiceTypeAndSubServiceAndCardGroupSetNameAndModuleCodeAndNetworkCodeAndLastVersion(String serialType, String subService,String cardGroupSetName,String moduleCode,String networkCode,String lastVersion);
+	  
 	Fundamentalssetvouchercard findByStatus(String status);
 }
