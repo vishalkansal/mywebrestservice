@@ -99,13 +99,27 @@ List<Fundamentalssetvouchercard> del=fundamentalsRepo.findByServiceTypeAndSubSer
 int siz=del.size();
 System.out.println(siz);
 int a=0;
+
 for(int i=0;i<siz;i++)
 {
-	Fundamentalssetvouchercard deletevoucher=del.get(i);
+Fundamentalssetvouchercard deletevoucher=del.get(i);
 a=deletevoucher.getCardGroupSetId();
 fundamentalsRepo.deleteById(a);
 }
 
+}
+
+
+@Override
+public List<Fundamentalssetvouchercard> viewVersionGroup(String serialType, String subService, String cardGroupSetName,
+		String moduleCode, String networkCode) {
+
+
+	List<Fundamentalssetvouchercard> view = fundamentalsRepo.findByServiceTypeAndSubServiceAndCardGroupSetNameAndModuleCodeAndNetworkCode(serialType,subService,cardGroupSetName,moduleCode,networkCode);
+	
+	
+	return view;
+	
 }
 		
 	

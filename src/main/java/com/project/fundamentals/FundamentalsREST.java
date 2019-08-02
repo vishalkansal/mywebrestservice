@@ -131,6 +131,15 @@ public class FundamentalsREST {
          return new ResponseEntity<String>("status:200 Default Voucher Card Group status set successfully",ht,HttpStatus.OK);
     }
 	
+
+	@RequestMapping(value = "/viewgroupversion", method = RequestMethod.GET)
+	public List<Fundamentalssetvouchercard> getversiongroup(@RequestParam("serialType")String serialType,
+			@RequestParam("subService")String subService,@RequestParam("cardGroupSetName")String cardGroupSetName,
+			@RequestParam("moduleCode")String moduleCode,@RequestParam("networkCode")String networkCode)
+	{
+	return fundamentalsService.viewVersionGroup(serialType,subService,cardGroupSetName,moduleCode,networkCode);
+			
+	}
 	
 	
 }
