@@ -111,11 +111,16 @@ fundamentalsRepo.deleteById(a);
 
 
 @Override
-public List<Fundamentalssetvouchercard> viewVersionGroup(String serialType, String subService, String cardGroupSetName,
+public List<Fundamentalssetvouchercard> viewVersionGroup(String serialType, 
+		String subService, String cardGroupSetName,
 		String moduleCode, String networkCode) {
 
 
-	List<Fundamentalssetvouchercard> view = fundamentalsRepo.findByServiceTypeAndSubServiceAndCardGroupSetNameAndModuleCodeAndNetworkCode(serialType,subService,cardGroupSetName,moduleCode,networkCode);
+	List<Fundamentalssetvouchercard> view = fundamentalsRepo.findByServiceTypeAndSubServiceAndCardGroupSetNameAndModuleCodeAndNetworkCode
+			(serialType,subService,cardGroupSetName,moduleCode,networkCode);
+	
+	
+	
 	
 	
 	return view;

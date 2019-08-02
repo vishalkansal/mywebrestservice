@@ -1,5 +1,6 @@
 package com.project.fundamentals;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -133,12 +134,26 @@ public class FundamentalsREST {
 	
 
 	@RequestMapping(value = "/viewgroupversion", method = RequestMethod.GET)
-	public List<Fundamentalssetvouchercard> getversiongroup(@RequestParam("serialType")String serialType,
+	public List<viewvouchercardgroup> getversiongroup(@RequestParam("serialType")String serialType,
 			@RequestParam("subService")String subService,@RequestParam("cardGroupSetName")String cardGroupSetName,
 			@RequestParam("moduleCode")String moduleCode,@RequestParam("networkCode")String networkCode)
 	{
-	return fundamentalsService.viewVersionGroup(serialType,subService,cardGroupSetName,moduleCode,networkCode);
-			
+		
+		
+		
+	
+		List<Fundamentalssetvouchercard> view= fundamentalsService.viewVersionGroup(serialType,subService,cardGroupSetName,moduleCode,networkCode);
+		List<viewvouchercardgroup> viewneed=new ArrayList<viewvouchercardgroup>();;
+		for(int i=0;i<view.size();i++)
+		{
+			int id=view.get(i).getCardGroupSetId();
+			String ver=view.get(i).getLastVersion();
+			viewvouchercardgroup v=new viewvouchercardgroup(id,ver);
+			viewneed.add(v);
+		}
+		
+		
+		return viewneed;
 	}
 	
 	
