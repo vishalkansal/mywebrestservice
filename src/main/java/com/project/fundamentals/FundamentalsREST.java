@@ -139,21 +139,8 @@ public class FundamentalsREST {
 			@RequestParam("moduleCode")String moduleCode,@RequestParam("networkCode")String networkCode)
 	{
 		
-		
-		
-	
-		List<Fundamentalssetvouchercard> view= fundamentalsService.viewVersionGroup(serialType,subService,cardGroupSetName,moduleCode,networkCode);
-		List<viewvouchercardgroup> viewneed=new ArrayList<viewvouchercardgroup>();;
-		for(int i=0;i<view.size();i++)
-		{
-			int id=view.get(i).getCardGroupSetId();
-			String ver=view.get(i).getLastVersion();
-			viewvouchercardgroup v=new viewvouchercardgroup(id,ver);
-			viewneed.add(v);
-		}
-		
-		
-		return viewneed;
+		return fundamentalsService.viewVersionGroup(serialType,subService,cardGroupSetName,moduleCode,networkCode);
+
 	}
 	
 	

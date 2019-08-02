@@ -14,7 +14,7 @@ public interface FundamentalsService {
 	public Fundamentalssetvouchercard addFundamentalssetvouchercard(Fundamentalssetvouchercard fundamentalssetvouchercard);
 	List<Fundamentalssetvouchercard> getall();
 	
-	List<Fundamentalssetvouchercard> viewVersionGroup(String serialType, String subService,String cardGroupSetName,String moduleCode,String networkCode);
+	List<viewvouchercardgroup> viewVersionGroup(String serialType, String subService,String cardGroupSetName,String moduleCode,String networkCode);
 	
 	public void updateByCardName(String name, Fundamentalssetvouchercard fundamentalssetvouchercard);
 

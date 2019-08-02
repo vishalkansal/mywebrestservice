@@ -1,5 +1,6 @@
 package com.project.fundamentals;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -111,7 +112,7 @@ fundamentalsRepo.deleteById(a);
 
 
 @Override
-public List<Fundamentalssetvouchercard> viewVersionGroup(String serialType, 
+public List<viewvouchercardgroup> viewVersionGroup(String serialType, 
 		String subService, String cardGroupSetName,
 		String moduleCode, String networkCode) {
 
@@ -119,11 +120,18 @@ public List<Fundamentalssetvouchercard> viewVersionGroup(String serialType,
 	List<Fundamentalssetvouchercard> view = fundamentalsRepo.findByServiceTypeAndSubServiceAndCardGroupSetNameAndModuleCodeAndNetworkCode
 			(serialType,subService,cardGroupSetName,moduleCode,networkCode);
 	
+	List<viewvouchercardgroup> viewneed=new ArrayList<viewvouchercardgroup>();;
+	for(int i=0;i<view.size();i++)
+	{
+		int id=view.get(i).getCardGroupSetId();
+		String ver=view.get(i).getLastVersion();
+		viewvouchercardgroup v=new viewvouchercardgroup(id,ver);
+		viewneed.add(v);
+	}
 	
 	
 	
-	
-	return view;
+	return viewneed;
 	
 }
 		
