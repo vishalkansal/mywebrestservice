@@ -5,6 +5,7 @@ public class viewvouchercardgroup {
 	
 	int cardGroupSetId;
 	String lastVersion;
+	
 	public int getCardGroupSetId() {
 		return cardGroupSetId;
 	}
@@ -17,7 +18,10 @@ public class viewvouchercardgroup {
 	public void setLastVersion(String lastVersion) {
 		this.lastVersion = lastVersion;
 	}
-	
+	public viewvouchercardgroup()
+	{
+		
+	}
 	public viewvouchercardgroup(int cardGroupSetId, String lastVersion)
 	{
 		this.cardGroupSetId=cardGroupSetId;

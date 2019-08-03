@@ -18,11 +18,14 @@ import com.project.fundamentals.ENTITY.Fundamentalssetvouchercard;
 import com.project.fundamentals.ENTITY.viewvouchercardgroup;
 import com.project.fundamentals.SERVICE.FundamentalsService;
 
+import io.swagger.annotations.ApiOperation;
+
 
 
 
 
 @RestController
+@RequestMapping("/RestApi")
 public class FundamentalsREST {
 
 	@Autowired
@@ -49,6 +52,7 @@ public class FundamentalsREST {
 	*/
 	
 	@RequestMapping(value = "/getAll", method = RequestMethod.GET)
+	@ApiOperation(value="View Voucher Card Group Version List")
 	@ResponseBody
     public List<Fundamentalssetvouchercard> getall()
     {
@@ -56,6 +60,7 @@ public class FundamentalsREST {
      }
 	
 	@RequestMapping(value = "/updatevouchercardbyid/{CARD_GROUP_SET_ID}", method = RequestMethod.PUT)
+	@ApiOperation(value="Update voucher card by ID")
 	@ResponseBody
     public ResponseEntity<String> updateNewFundamentalssetvouchercardbyid(@PathVariable(value="CARD_GROUP_SET_ID") int id, @RequestBody Fundamentalssetvouchercard fundamentalsupdatevouchercard) {
 		
@@ -72,52 +77,51 @@ public class FundamentalsREST {
 	
 	
 	@RequestMapping(value = "/deleteById/{card_group_set_id}", method = RequestMethod.DELETE)
+	@ApiOperation(value="Delete Voucher Card Group by ID")
 	@ResponseBody
     public ResponseEntity<String> deletebyid(@PathVariable(value="card_group_set_id") int id)
     {
-		fundamentalsService.deletebyid(id);
+	boolean a=	fundamentalsService.deletebyid(id);
+	if(a==true)
 		 return new ResponseEntity<String>("status:200 Voucher Card Group deleted successfully",HttpStatus.OK);
+		else
+			return new ResponseEntity<String>("DEFAULT IS Y SO NO DELETION",HttpStatus.OK);
    }
 	
-	/*@RequestMapping(value = "/updatevouchercardbyid/{CARD_GROUP_SET_ID}", method = RequestMethod.PUT)
+	
+	@RequestMapping(value = "/deleteVoucherGroup", method = RequestMethod.DELETE)
+	@ApiOperation(value="Delete Voucher Card Group")
 	@ResponseBody
-    public ResponseEntity<String> updateNewFundamentalssetvouchercardbyid(@PathVariable(value="CARD_GROUP_SET_ID") int id, @RequestBody Fundamentalssetvouchercard fundamentalsupdatevouchercard) {
+    public ResponseEntity<String> deletebygivenparameters(@RequestParam("serviceType")String serviceType,
+			@RequestParam("subService")String subService,@RequestParam("cardGroupSetName")String cardGroupSetName,
+			@RequestParam("moduleCode")String moduleCode,@RequestParam("networkCode")String networkCode,@RequestParam("lastVersion")String lastVersion)
+    {
 		
-		fundamentalsService.updateFundamentalssetvouchercardbyid(id,fundamentalsupdatevouchercard);
-     
-         HttpHeaders ht=new HttpHeaders();
-         ht.add("status", "200");
-         ht.add("msg", "Voucher Card Group updated successfully");
-         return new ResponseEntity<String>("status:200 Voucher Card Group updated successfully",ht,HttpStatus.OK);
+	boolean a=	fundamentalsService.deleteVoucher(serviceType,subService,cardGroupSetName,moduleCode,networkCode,lastVersion);
+		if(a==true)
+		 return new ResponseEntity<String>("status:200 Voucher Card Group deleted successfully",HttpStatus.OK);
+		else
+			return new ResponseEntity<String>("DEFAULT IS Y SO NO DELETION",HttpStatus.OK);
     }
 	
 	
 	
-	*/
-	
-	@RequestMapping(value = "/deleteVoucherGroup", method = RequestMethod.DELETE)
-	@ResponseBody
-    public ResponseEntity<String> deletebyid(@RequestBody Fundamentalssetvouchercard fundamentalsupdatevouchercard)
-    {
-		
-		fundamentalsService.deleteVoucher(fundamentalsupdatevouchercard);
-		
-		 return new ResponseEntity<String>("status:200 Voucher Card Group deleted successfully",HttpStatus.OK);
-   }
-	
-	
-	
 	@RequestMapping(value = "/updatevouchercardbyname/{cardGroupSetName}", method = RequestMethod.PUT)
+	@ApiOperation(value="Update Voucher Card By Name")
 	@ResponseBody
     public ResponseEntity<String> updateNewFundamentalssetvouchercardbyname(@PathVariable(value="cardGroupSetName") String  cardGroupSetName, @RequestBody Fundamentalssetvouchercard fundamentalsupdatevouchercard) {
 		
-		fundamentalsService.updateByCardName(cardGroupSetName,fundamentalsupdatevouchercard);
+		boolean a=fundamentalsService.updateByCardName(cardGroupSetName,fundamentalsupdatevouchercard);
      
          HttpHeaders ht=new HttpHeaders();
          ht.add("status", "200");
          ht.add("msg", "Voucher Card Group updated by name successfully");
+         if(a==true)
          return new ResponseEntity<String>("status:200 Voucher Card Group updated by name successfully",ht,HttpStatus.OK);
-    }	
+         else
+        	 return new ResponseEntity<String>("NOT FOUND",HttpStatus.OK);
+         	 
+	}	
 	
 	
 	
@@ -128,6 +132,7 @@ public class FundamentalsREST {
 	
 	
 	@RequestMapping(value = "/setdefaultvouchercard", method = RequestMethod.POST)
+	@ApiOperation(value="Set Default Voucher Card Group")
 	@ResponseBody
     public ResponseEntity<String> addNewFundamentalssetvouchercard(@RequestBody Fundamentalssetvouchercard fundamentalssetvouchercard) {
 		
@@ -141,6 +146,7 @@ public class FundamentalsREST {
 	
 
 	@RequestMapping(value = "/viewgroupversion", method = RequestMethod.GET)
+	@ApiOperation(value="View Voucher Card Group Version List")
 	public List<viewvouchercardgroup> getversiongroup(@RequestParam("serviceType")String serialType,
 			@RequestParam("subService")String subService,@RequestParam("cardGroupSetName")String cardGroupSetName,
 			@RequestParam("moduleCode")String moduleCode,@RequestParam("networkCode")String networkCode)
@@ -151,6 +157,7 @@ public class FundamentalsREST {
 	}
 	
 	@RequestMapping(value = "/viewrequired", method = RequestMethod.GET)
+	@ApiOperation(value="View Voucher Card Group")
 	@ResponseBody
     public Optional<CardGroupDetails> viewrequiredParameters(@RequestParam("serviceType")String serviceType,
 			@RequestParam("subService")String subService,@RequestParam("cardGroupSetName")String cardGroupSetName,
