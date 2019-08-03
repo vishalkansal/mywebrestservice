@@ -7,16 +7,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
+@ApiModel(description="Details about CARD")
 @Table(name = "CARD_GROUP_SUB_BON_ACC_DETAILS")
 public class CardGroupBonusDetails {
 
 	
 @Column(name = "CARD_GROUP_SET_ID", nullable = false, length = 11)
+@ApiModelProperty(notes="This is AUTO generated ID")
 @GeneratedValue(strategy = GenerationType.AUTO)
 int	cardGroupSetId;
 
 @Column(name = "VERSION", nullable = false,length = 50)
+
 String	version;
 
 @Id

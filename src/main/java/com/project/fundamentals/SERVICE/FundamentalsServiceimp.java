@@ -1,6 +1,8 @@
 package com.project.fundamentals.SERVICE;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,12 +23,17 @@ import com.project.fundamentals.REPOSITORY.RepoCardGroupDetails;
 @Service
 public class FundamentalsServiceimp implements FundamentalsService{
 
-	@Autowired
+
 	private FundamentalsRepo fundamentalsRepo;
 	
-	@Autowired
 	RepoCardGroupDetails repocardgroupdetails;
 	
+	@Autowired
+	public FundamentalsServiceimp(FundamentalsRepo fundamentalsRepo, RepoCardGroupDetails repocardgroupdetails)
+	{
+		this.fundamentalsRepo=fundamentalsRepo;
+		this.repocardgroupdetails=repocardgroupdetails;
+	}
 	
 	public FundamentalsServiceimp(FundamentalsRepo fundamentalsRepo)
 	{
@@ -34,96 +41,113 @@ public class FundamentalsServiceimp implements FundamentalsService{
 	}
 	
 	
-	@Override
+	
 	public Fundamentalssetvouchercard addFundamentalssetvouchercard(Fundamentalssetvouchercard fundamentalssetvouchercard) {
-		//System.out.println(fundamentalssetvouchercard);
+		
+		LocalDate localDate=LocalDate.now();
+		   @SuppressWarnings("deprecation")
+		   Date date=new Date(localDate.getYear()-1900, localDate.getMonthValue(), localDate.getDayOfMonth());
+		fundamentalssetvouchercard.setCreatedOn(date);
+		fundamentalssetvouchercard.setModifiedOn(date);
+	
 		return fundamentalsRepo.save(fundamentalssetvouchercard);
 	}
 
-/*
-	@Override
-	public void updateFundamentalssetvouchercard(String card_group_set_name,Fundamentalssetvouchercard fundamentalsupdatevouchercard) {
-		
-	Fundamentalssetvouchercard update=	 fundamentalsRepo.findByCard_group_set_name(card_group_set_name);
-		   //Optional<Fundamentalssetvouchercard> update=fundamentalsService.updateFundamentalssetvouchercard( CARD_GROUP_SET_ID);
-	int i=0;
-	i=update.getCARD_GROUP_SET_ID();	    
-	if(i!=0)
-		     {
-		    	 fundamentalsupdatevouchercard.setCARD_GROUP_SET_ID(i);
-		    	 fundamentalsRepo.save(fundamentalsupdatevouchercard);
-		     }    
-	}
-	*/
 	
-	@Override
+	
 	public void updateFundamentalssetvouchercardbyid(int card_group_set_id,Fundamentalssetvouchercard fundamentalsupdatevouchercard) {
 		
 		   Optional<Fundamentalssetvouchercard> update=fundamentalsRepo.findById( card_group_set_id);
-    
-	if(update!=null)
+			LocalDate localDate=LocalDate.now();
+			   @SuppressWarnings("deprecation")
+			   Date date=new Date(localDate.getYear()-1900, localDate.getMonthValue(), localDate.getDayOfMonth());
+			
+			update.get().setModifiedOn(date);
+		
+	if(update!=null )
 		     {
+		if(fundamentalsupdatevouchercard.getIsDefault().equals("Y") && fundamentalsRepo.findByCardGroupSetId(card_group_set_id).getIsDefault().equals("Y")) {}
+		else{
 		    	 fundamentalsupdatevouchercard.setCardGroupSetId(card_group_set_id);
 		    	 fundamentalsRepo.save(fundamentalsupdatevouchercard);
-		     }    
+		}}    
 	}
 
 
-	@Override
+	
 	public List<Fundamentalssetvouchercard> getall() {
 		
 		return fundamentalsRepo.findAll();
 	}
 
 
-	@Override
-	public void deletebyid(int id) {
+	
+	public boolean deletebyid(int id) {
 		
-		fundamentalsRepo.deleteById(id);
-		
-	}
 
-@Override
-	public void updateByCardName(String name, Fundamentalssetvouchercard fundamentalssetvouchercard) {
+		Optional<Fundamentalssetvouchercard> fundamentalssetvouchercard2=fundamentalsRepo.findById(id);
 		
-	Fundamentalssetvouchercard fundamentalssetvouchercard2 = fundamentalsRepo.findByCardGroupSetName(name);
-	int i=0;
-	 i=fundamentalssetvouchercard2.getCardGroupSetId();
-		if(i!=0)
+		if(fundamentalssetvouchercard2.get().getIsDefault().equals("Y") )
 		{
-			fundamentalssetvouchercard.setCardGroupSetId(i);
-			fundamentalsRepo.save(fundamentalssetvouchercard);
+			return false;
 		}
+		else{
+		fundamentalsRepo.deleteById(id);
+		return true;
+		}
+	}
+
+
+	public boolean updateByCardName(String name, Fundamentalssetvouchercard fundamentalssetvouchercard) {
+		
+		if(fundamentalsRepo.findByCardGroupSetName(name)!=null)
+		{	Fundamentalssetvouchercard fundamentalssetvouchercard2 = fundamentalsRepo.findByCardGroupSetName(name);
+	int i=0;
+	LocalDate localDate=LocalDate.now();
+	   @SuppressWarnings("deprecation")
+	   Date date=new Date(localDate.getYear()-1900, localDate.getMonthValue(), localDate.getDayOfMonth());
+	   i=fundamentalssetvouchercard2.getCardGroupSetId();
+		if(fundamentalssetvouchercard2.getIsDefault().equals("Y") && fundamentalssetvouchercard.getIsDefault().equals("Y"))  return false;
+		i=fundamentalssetvouchercard2.getCardGroupSetId();
+			fundamentalssetvouchercard.setCardGroupSetId(i);
+			fundamentalssetvouchercard.setModifiedOn(date);
+			fundamentalsRepo.save(fundamentalssetvouchercard);
+			return true;
+		}
+		else
+		return false;
 		
 	}
 
 
-@Override
-public void deleteVoucher(Fundamentalssetvouchercard fundamentalssetvouchercard) {
-	
-List<Fundamentalssetvouchercard> del=fundamentalsRepo.findByServiceTypeAndSubServiceAndCardGroupSetNameAndModuleCodeAndNetworkCodeAndLastVersion
-(fundamentalssetvouchercard.getServiceType(),
-		fundamentalssetvouchercard.getSubService(),
-		fundamentalssetvouchercard.getCardGroupSetName(),
-		fundamentalssetvouchercard.getModuleCode(),
-		fundamentalssetvouchercard.getNetworkCode(),
-		fundamentalssetvouchercard.getLastVersion());
-	
-int siz=del.size();
-System.out.println(siz);
-int a=0;
 
-for(int i=0;i<siz;i++)
+public boolean deleteVoucher(String serialType,String subService,String cardGroupSetName,String moduleCode,String networkCode,String lastVersion) {
+	
+Fundamentalssetvouchercard del=fundamentalsRepo.findByServiceTypeAndSubServiceAndCardGroupSetNameAndModuleCodeAndNetworkCodeAndLastVersion
+(serialType,subService,cardGroupSetName,moduleCode,networkCode,lastVersion);
+	
+
+if(del!=null)
 {
-Fundamentalssetvouchercard deletevoucher=del.get(i);
-a=deletevoucher.getCardGroupSetId();
+
+int a=del.getCardGroupSetId();
+
+
+if(del.getIsDefault().equals("Y"))
+{
+	return false;
+}
+else{
 fundamentalsRepo.deleteById(a);
+return true;
+}
+}
+return false;
+
 }
 
-}
 
 
-@Override
 public List<viewvouchercardgroup> viewVersionGroup(String serialType, 
 		String subService, String cardGroupSetName,
 		String moduleCode, String networkCode) {
@@ -132,7 +156,9 @@ public List<viewvouchercardgroup> viewVersionGroup(String serialType,
 	List<Fundamentalssetvouchercard> view = fundamentalsRepo.findByServiceTypeAndSubServiceAndCardGroupSetNameAndModuleCodeAndNetworkCode
 			(serialType,subService,cardGroupSetName,moduleCode,networkCode);
 	
-	List<viewvouchercardgroup> viewneed=new ArrayList<viewvouchercardgroup>();;
+	
+	
+	List<viewvouchercardgroup> viewneed=new ArrayList<viewvouchercardgroup>();
 	for(int i=0;i<view.size();i++)
 	{
 		int id=view.get(i).getCardGroupSetId();
@@ -148,9 +174,9 @@ public List<viewvouchercardgroup> viewVersionGroup(String serialType,
 }
 public Optional<CardGroupDetails> viewrequired(String serviceType, String subService,String cardGroupSetName,String moduleCode,String networkCode,String lastVersion){
 	
-	List<Fundamentalssetvouchercard> view=fundamentalsRepo.findByServiceTypeAndSubServiceAndCardGroupSetNameAndModuleCodeAndNetworkCodeAndLastVersion(serviceType,subService,cardGroupSetName,moduleCode,networkCode,lastVersion);
+	Fundamentalssetvouchercard view=fundamentalsRepo.findByServiceTypeAndSubServiceAndCardGroupSetNameAndModuleCodeAndNetworkCodeAndLastVersion(serviceType,subService,cardGroupSetName,moduleCode,networkCode,lastVersion);
 	
-	int id=view.get(0).getCardGroupSetId();
+	int id=view.getCardGroupSetId();
 	
 System.out.println(id);
 	return	repocardgroupdetails.findById(id);	

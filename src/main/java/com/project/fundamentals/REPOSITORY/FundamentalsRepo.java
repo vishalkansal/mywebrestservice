@@ -15,17 +15,11 @@ import com.project.fundamentals.ENTITY.Fundamentalssetvouchercard;
 public interface FundamentalsRepo extends JpaRepository<Fundamentalssetvouchercard,Integer > {
 	
 	Fundamentalssetvouchercard findByCardGroupSetName(String cardGroupSetName);
-
-	List<Fundamentalssetvouchercard> findByServiceTypeAndSubServiceAndCardGroupSetNameAndModuleCodeAndNetworkCodeAndLastVersion(String serialType, String subService,String cardGroupSetName,String moduleCode,String networkCode,String lastVersion);
+	Fundamentalssetvouchercard findByCardGroupSetId(int cardGroupSetName);
+	Fundamentalssetvouchercard findByServiceTypeAndSubServiceAndCardGroupSetNameAndModuleCodeAndNetworkCodeAndLastVersion(String serialType, String subService,String cardGroupSetName,String moduleCode,String networkCode,String lastVersion);
 	  
 	Fundamentalssetvouchercard findByStatus(String status);
-//@Query("SELECT last_version,CARD_GROUP_SET_ID FROM CARD_GROUP_SET WHERE service_type=serviceType AND sub_service=subService AND card_group_set_name=cardGroupSetName AND module_code=moduleCode AND network_code=networkCode")
-//List<Fundamentalssetvouchercard> viewcardgroupversion(@Param("serviceType")String serviceType,@Param("subService")String subService,@Param("cardGroupSetName")String cardGroupSetName,@Param("moduleCode")String moduleCode,@Param("networkCode")String networkCode);
 
 	List<Fundamentalssetvouchercard> findByServiceTypeAndSubServiceAndCardGroupSetNameAndModuleCodeAndNetworkCode(String serialType, String subService,String cardGroupSetName,String moduleCode,String networkCode); 
-//	List<Fundamentalssetvouchercard> getLastVersionAndCardGroupSetIdOnly();
-
-	
-//List<Fundamentalssetvouchercard> getLastVersionAndCardGroupSetNameOnly(String serialType, String subService,String cardGroupSetName,String moduleCode,String networkCode); 
 	
 }

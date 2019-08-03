@@ -48,143 +48,18 @@ int	endRange;
 private List<CardGroupBonusDetails> bonusAccList;
 
 
-//@OneToOne
-//@JoinColumn(name = "CARD_GROUP_ID", insertable = false, updatable = false, referencedColumnName="CARD_GROUP_ID")
-//private CardGroupBonusDetails bonus;
-
-
-//@Column(name = "VALIDITY_PERIOD_TYPE", nullable = true, length = 11)
-//@Temporal(TemporalType.TIMESTAMP)
-//@CreatedDate
-//String validityPeriodType;
-
-
-//@Column(name = "VALIDITY_PERIOD", nullable = true, length = 20)
-//int validityPeriod;
-
-//@Column(name = "GRACE_PERIOD", nullable = true, length = 5)
-//int gracePeriod;
-
-
-//@Column(name = "SENDER_TAX1_NAME", nullable = true, length = 10)
-//String	sendeTax1Name;
-
-//@Column(name = "SENDER_TAX1_TYPE", nullable = true, length = 1)
-//String senderTax1Type;
-
-//@Column(name = "SENDER_TAX1_RATE", nullable = true, length = 140)
-//int senderTax1Rate;
-
-
-//@Column(name = "SENDER_TAX2_NAME", nullable = true, length = 10)
-//String	sendeTax2Name;
-
-//@Column(name = "SENDER_TAX2_TYPE", nullable = true, length = 1)
-//String senderTax2Type;
-
-//@Column(name = "SENDER_TAX2_RATE", nullable = true, length = 140)
-//int senderTax2Rate;
-
-//@Column(name = "RECEIVER_TAX1_NAME", nullable = true, length = 10)
-//String	receiverTax1Name;
-
-//@Column(name = "RECEIVER_TAX1_TYPE", nullable = true, length = 1)
-//String receiverTax1Type;
-
-//@Column(name = "RECEIVER_TAX1_RATE", nullable = true, length = 140)
-//int receiverTax1Rate;
-
-//@Column(name = "RECEIVER_TAX2_NAME", nullable = true, length = 10)
-//String	receiverTax2Name;
-
-//@Column(name = "RECEIVER_TAX2_TYPE", nullable = true, length = 1)
-//String receiverTax2Type;
-
-//@Column(name = "RECEIVER_TAX2_RATE", nullable = true, length = 140)
-//int receiverTax2Rate;
-
-
-//@Column(name = "BONUS_VALIDITY_VALUE", nullable = true, length = 10)
-//int bonusValidityValue;
-
-//@Column(name = "SENDER_ACCESS_FEE_TYPE", nullable = true, length = 10)
-//String	senderAccessFeeType;
-
-//@Column(name = "SENDER_ACCESS_FEE_RATE", nullable = true, length = 10)
-//int senderAccessFeeRate;
-
-//@Column(name = "MIN_SENDER_ACCESS_FEE", nullable = true, length = 10)
-//int minSenderAccessFee;
-
-//@Column(name = "MAX_SENDER_ACCESS_FEE", nullable = true, length = 10)
-//int maxSenderAccessFee;
-
-
-//@Column(name = "RECEIVER_ACCESS_FEE_TYPE", nullable = true, length = 10)
-//String	receiverAccessFeeType;
-
-//@Column(name = "RECEIVER_ACCESS_FEE_RATE", nullable = true, length = 10)
-//int receiverAccessFeeRate;
-
-//@Column(name = "MIN_RECEIVER_ACCESS_FEE", nullable = true, length = 10)
-//int minReceiverAccessFee;
-
-//@Column(name = "MAX_RECEIVER_ACCESS_FEE", nullable = true, length = 10)
-//int maxReceiverAccessFee;
-
-
-//@Column(name = "CARD_GROUP_CODE", nullable = false, length = 10)
-//String	cardGroupCode;
-
-//@Column(name = "MULTIPLE_OF", nullable = true, length = 10)
-//int multipleOf;
-
-//@Column(name = "ONLINE_OFFLINE", nullable = true, length = 10)
-//String onlineOffline;
-
-//@Column(name = "BOTH", nullable = true, length = 10)
-//String both;
-
-
-//@Column(name = "SENDER_MULT_FACTOR", nullable = true, length = 10)
-//int senderMultFactor;
-
-//@Column(name = "RECEIVER_MULT_FACTOR", nullable = true, length = 10)
-//int receiverMultFactor;
-
-//@Column(name = "STATUS", nullable = true, length = 10)
-//String status;
-
-//@Column(name = "COS_REQUIRED", nullable = true, length = 10)
-//String cosRequired;
-
-//@Column(name = "IN_PROMO", nullable = true, length = 10)
-//int inPromo;
-
-//public CardGroupBonusDetails getBonus() {
-	//return bonus;
-//}
-
-//public void setBonus(CardGroupBonusDetails bonus) {
-	//this.bonus = bonus;
-//}
-
-public List<CardGroupBonusDetails> getBonus() {
-	return bonusAccList;
-}
-
-public void setBonus(List<CardGroupBonusDetails> bonusAccList) {
-	this.bonusAccList = bonusAccList;
-}
-
 @Column(name = "CARD_NAME", nullable = true, length = 10)
 String cardName;
 
-//@Column(name = "REVERSAL_PERMITTED", nullable = true, length = 10)
-//String reversalPermitted;
 
-//@Column(name = "REVERSAL_MODIFIED_DATE", nullable = true, length = 10)
-//Date reversalModifiedDate;
+@Column(name = "VOUCHER_TYPE", nullable = false, length = 10)
+String voucherType;
+
+@Column(name = "VOUCHER_SEGMENT", nullable = false, length = 10)
+String voucherSegment;
+
+@Column(name = "VOUCHER_PRODUCT_ID", nullable = false, length = 10)
+String voucherProductId;
 
 public int getCardGroupSetId() {
 	return cardGroupSetId;
@@ -246,8 +121,18 @@ public String getVoucherSegment() {
 	return voucherSegment;
 }
 
+
 public void setVoucherSegment(String voucherSegment) {
 	this.voucherSegment = voucherSegment;
+}
+
+
+public List<CardGroupBonusDetails> getBonus() {
+	return bonusAccList;
+}
+
+public void setBonus(List<CardGroupBonusDetails> bonusAccList) {
+	this.bonusAccList = bonusAccList;
 }
 
 public String getVoucherProductId() {
@@ -257,13 +142,4 @@ public String getVoucherProductId() {
 public void setVoucherProductId(String voucherProductId) {
 	this.voucherProductId = voucherProductId;
 }
-
-@Column(name = "VOUCHER_TYPE", nullable = false, length = 10)
-String voucherType;
-
-@Column(name = "VOUCHER_SEGMENT", nullable = false, length = 10)
-String voucherSegment;
-
-@Column(name = "VOUCHER_PRODUCT_ID", nullable = false, length = 10)
-String voucherProductId;
 }
