@@ -2,7 +2,7 @@ package com.project.fundamentals.ENTITY;
 
 
 import java.time.LocalDate;
-
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,33 +19,33 @@ import javax.persistence.Table;
 public class Fundamentalssetvouchercard {
 
 	
-@Column(name = "CARD_GROUP_SET_ID", nullable = true, length = 11)
+@Column(name = "CARD_GROUP_SET_ID", nullable = false, length = 11)
 @Id
-@GeneratedValue(strategy = GenerationType.AUTO)
+@GeneratedValue(strategy= GenerationType.AUTO)
 int	cardGroupSetId;
 
-@Column(name = "card_group_set_name", nullable = true,length = 50)
+@Column(name = "card_group_set_name", nullable = false,length = 50)
 String	cardGroupSetName;
 
 @Column(name = "network_code", length = 2)
 String	networkCode;
 
-@Column(name = "created_on",  nullable = true, length = 11)
+@Column(name = "created_on",  nullable = false, length = 11)
 //@Temporal(TemporalType.DATE)
 //@CreatedDate
-String createdOn;
+Date createdOn;
 
-@Column(name = "created_by", nullable = true, length = 20)
+@Column(name = "created_by", nullable = false, length = 20)
 String	createdBy;
 
 
-@Column(name = "modified_on", nullable = true, length = 11)
+@Column(name = "modified_on", nullable = false, length = 11)
 //@Temporal(TemporalType.TIMESTAMP)
 //@CreatedDate
-String modifiedOn;
+Date modifiedOn;
 
 
-@Column(name = "modified_by", nullable = true, length = 20)
+@Column(name = "modified_by", nullable = false, length = 20)
 String	modifiedBy;
 
 @Column(name = "last_version", nullable = true, length = 5)
@@ -58,16 +58,16 @@ String	moduleCode;
 @Column(name = "status", nullable = true, length = 1)
 String status;
 
-@Column(name = "language_1_message", nullable = true, length = 140)
+@Column(name = "language_1_message", nullable = false, length = 140)
 String	language1Message;
 
-@Column(name = "language_2_message", nullable = true, length = 140)
+@Column(name = "language_2_message", nullable = false, length = 140)
 String	language2Mmessage;
 
 @Column(name = "sub_service", nullable = true, length = 10)
 String	subService;
 
-@Column(name = "service_type", nullable = true, length = 10)
+@Column(name = "service_type", nullable = false, length = 10)
 String	serviceType;
 
 @Column(name = "set_type", nullable = true, length = 10)
@@ -108,14 +108,7 @@ public void setNetworkCode(String networkCode) {
 }
 
 
-public String getCreatedOn() {
-	return createdOn;
-}
 
-
-public void setCreatedOn(String createdOn) {
-	this.createdOn = createdOn;
-}
 
 
 public String getCreatedBy() {
@@ -128,12 +121,25 @@ public void setCreatedBy(String createdBy) {
 }
 
 
-public String getModifiedOn() {
+
+
+
+public Date getCreatedOn() {
+	return createdOn;
+}
+
+
+public void setCreatedOn(Date createdOn) {
+	this.createdOn = createdOn;
+}
+
+
+public Date getModifiedOn() {
 	return modifiedOn;
 }
 
 
-public void setModifiedOn(String modifiedOn) {
+public void setModifiedOn(Date modifiedOn) {
 	this.modifiedOn = modifiedOn;
 }
 
